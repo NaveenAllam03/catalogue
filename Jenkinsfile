@@ -27,9 +27,11 @@ pipeline {
                 }
             }
         }
-         stage('hi') {
+         stage('install depencencies') {
             steps {
-                echo 'good morning'
+                sh """
+                    npm install
+                """
             }
         }
          stage('He') {
