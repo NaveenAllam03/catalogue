@@ -11,6 +11,7 @@ pipeline {
 
     environment {
         packageVersion = ''
+        nexusURL = '172.31.36.195'
     }
     //options{}
         // to write timeout, exits when time limit exceeds
@@ -38,7 +39,28 @@ pipeline {
             steps {
                 sh """
                 ls -la  
+                zip -r catalogue.zip ./* -x ".git" -x "*.zip"
+                ls -ltr
                 """
+            }
+        }
+         stage('publish Artifact') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '${nexusURL}',
+                    groupId: 'com.roboshop',
+                    version: '${packageVersion}',
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue.zip',
+                        type: 'zip']
+                    ]
+                )
             }
         }
     }
@@ -46,6 +68,7 @@ pipeline {
     post {
         always { //multiple options avaliable instead of always, it will run irrespective of results
             echo 'I will always say hello again'
+            deleteDir()
         }
         failure {
             echo 'this runs when pipeline is failes' // generally used when pipiline fails for failure
