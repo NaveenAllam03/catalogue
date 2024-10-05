@@ -11,7 +11,7 @@ pipeline {
 
     environment {
         packageVersion = ''
-        nexusURL = '172.31.36.195'
+        nexusURL = '172.31.36.195:8081'
     }
     //options{}
         // to write timeout, exits when time limit exceeds
