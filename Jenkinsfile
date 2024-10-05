@@ -3,7 +3,7 @@
 pipeline {
     agent { //adding agent , can add multiple agents
         node {
-            label 'agent-1'
+            label 'node1-nodejs'
         }
     } 
     // parameters {}
