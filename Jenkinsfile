@@ -34,10 +34,10 @@ pipeline {
                 """
             }
         }
-         stage('He') {
+         stage('build job') {
             steps {
-                echo 'Hello World'
-                sh """ 
+                sh """
+                ls -la  
                 """
             }
         }
